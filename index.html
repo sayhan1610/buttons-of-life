@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buttons of Life</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden; /* Ensure the video covers the entire viewport */
+      }
+
+      #video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1; /* Place the video behind other elements */
+      }
+
+      .button-container {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .button {
+        position: relative;
+        width: 80px; /* Increase width */
+        height: 40px; /* Increase height */
+        border-radius: 20px;
+        background-color: #726e6e;
+        cursor: pointer;
+        overflow: hidden;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+      }
+
+      .slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        border-radius: 20px;
+        background-color: #ffd000;
+        transition: width 0.3s ease;
+      }
+
+      .button.on .slider {
+        width: 100%;
+      }
+
+      .text {
+        color: #fff;
+        font-size: 14px;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <video id="video-background" autoplay muted loop>
+      <source src="lighting.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <div class="button-container">
+      <div class="button off" id="button1">
+        <div class="slider"></div>
+        <div class="text">Love</div>
+      </div>
+      <div class="button off" id="button2">
+        <div class="slider"></div>
+        <div class="text">Money</div>
+      </div>
+      <div class="button off" id="button3">
+        <div class="slider"></div>
+        <div class="text">Happiness</div>
+      </div>
+    </div>
+
+    <script>
+      const buttons = document.querySelectorAll(".button");
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (button.classList.contains("on")) {
+            button.classList.remove("on");
+            button.classList.add("off");
+          } else {
+            const activeButtons = document.querySelectorAll(".button.on");
+            if (activeButtons.length >= 2) {
+              const randomButton =
+                activeButtons[Math.floor(Math.random() * activeButtons.length)];
+              randomButton.classList.remove("on");
+              randomButton.classList.add("off");
+            }
+            button.classList.remove("off");
+            button.classList.add("on");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
